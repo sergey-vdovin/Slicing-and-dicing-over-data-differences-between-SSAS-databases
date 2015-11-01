@@ -1,0 +1,31 @@
+--NOTE: BACKUP YOUR CUBE FIRST!!!
+--NOTE: AFTER YOU RUN THESE FUNCTIONS, YOU WILL NEED TO RIGHT CLICK ON THE MEASURE GROUP IN MANAGEMENT STUDIO AND DO A FULL PROCESS ON THE MEASURE GROUP
+--NOTE: RUN THESE EXAMPLES FROM THE Adventure Works DW database
+
+--partition by year
+call ASSP.CreatePartitions("Adventure Works", "Internet Sales", "[Date].[Calendar Year].[Calendar Year].Members")
+
+--uneven partitioning
+call ASSP.CreatePartitions("Adventure Works", "Internet Sales", "{null:[Date].[Calendar].[CY 2003]} + {[Date].[Calendar].[January 2004]:null}")
+
+--you can go back to 1 partition:
+call ASSP.CreatePartitions("Adventure Works", "Internet Sales", "[Date].[Calendar Year].[All Periods]")
+
+--partition by the first letter in the product name:
+call ASSP.CreatePartitions("Adventure Works", "Internet Sales", "[Product].[Product].[Product].Members", "Left([Product].[Product].CurrentMember.Name,1)")
+
+--partition by ad-hoc groupings of years
+call ASSP.CreatePartitions("Adventure Works", "Internet Sales", "[Date].[Calendar Year].[Calendar Year].Members","IIf([Date].[Calendar Year].CurrentMember.Name >= 'CY 2003','newYears','oldYears')")
+
+--partition by product category and quarter
+call ASSP.CreatePartitions("Adventure Works", "Internet Sales", "[Product].[Category].[Category].Members*[Date].[Calendar].[Calendar Quarter].Members")
+
+--partition by year then segment the distinct count value into 4 sub-partitions automatically based on the range of data in the dimension currently
+call ASSP.CreateDistinctCountPartitions("Adventure Works", "Internet Customers", "[Date].[Calendar Year].[Calendar Year].Members", "", 4)
+
+--partition by year then segment the distinct count value into 3 sub-partitions with the specified range of distinct count values
+call ASSP.CreateDistinctCountPartitions("Adventure Works", "Internet Customers", "[Date].[Calendar Year].[Calendar Year].Members", "", 3, 10000, 30000)
+
+--partition by year then segment the distinct count value into 2 sub-partitions using SO59410 as the boundary value
+call ASSP.CreateStringDistinctCountPartitions("Adventure Works", "Internet Orders", "[Date].[Calendar Year].[Calendar Year].Members", "", "SO59410")
+

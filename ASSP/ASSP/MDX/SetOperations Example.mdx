@@ -1,0 +1,132 @@
+// An example of MDX query to reverse the set.
+// This query returns the years in the reverse order - from 2004 to 2001
+//
+// The results should be the same as with following query
+//select 
+//{} on 0,
+//Generate([Date].[Calendar].[Calendar Year].members AS A, {A.Item(A.Count-A.CurrentOrdinal)}) on 1
+//from [Adventure Works]
+select 
+{} on 0,
+ASSP.ReverseSet([Date].[Calendar].[Calendar Year].members) on 1
+from [Adventure Works]
+
+go
+
+// An example of MDX query to return random sampling from the set.
+// This query returns 10 random products
+select 
+{} on 0,
+ASSP.RandomSample([Product].[Product].[Product].members, 10) on 1
+from [Adventure Works]
+
+go
+
+// An example of MDX query to inverse hierarchility of all the tuples in the set
+// This query switches product category and calendar years hierarchies in every tuple.
+// Not, that the result is not the same as [Date].[Calendar].[Calendar Year].members*[Product].[Category].[Category].members
+select
+{} on 0,
+ASSP.InverseHierarchility([Product].[Category].[Category].members*[Date].[Calendar].[Calendar Year].members) on 1
+from [Adventure Works]
+
+go
+
+// An example of MDX query to do assymentric drill down, i.e. when we want to drill down
+// only one member of one tuple. If the same member appears in other tuples - they shouldn't be drilled down.
+// In this query, we drill down Accessories member but only in the third tuple (indexes are zero based).
+select
+{} on 0,
+ASSP.AsymmetricDrillDown(
+Head([Date].[Calendar].[Calendar Year].members*[Product].[Product Categories].[Category].members*[Sales Territory].[Sales Territory].[Group].members,10)
+,2,1)
+on 1
+from [Adventure Works]
+
+go
+
+// An example of MDX query to use the ASSP Order function
+// This query sorts a set in descending order
+with 
+member y as Count(ASSP.[Order]([Customer].[Customer].[Customer].MEMBERS*[Product].[Category].[Category].MEMBERS*[Product].[Style].[Style].MEMBERS, Measures.[Internet Sales Amount], true))
+select y on 0
+from [Adventure Works]
+
+go
+
+// The ASSP Order function may outperform the build-in Order function in some situations
+// notice this query using the built-in function takes 3x as long as the ASSP Order function
+with 
+member y as Count(Order([Customer].[Customer].[Customer].MEMBERS*[Product].[Category].[Category].MEMBERS*[Product].[Style].[Style].MEMBERS, Measures.[Internet Sales Amount], BDESC))
+select y on 0
+from [Adventure Works]
+
+go
+
+// A more realistic usage example of the ASSP Order function
+// This query sorts product categories ascending on Internet Sales Amount
+select [Measures].[Internet Sales Amount] on 0,
+ASSP.[Order]([Product].[Category].[Category].MEMBERS,[Measures].[Internet Sales Amount]) on 1
+from [Adventure Works]
+
+go
+
+// A more realistic usage example of the ASSP Order function
+// This query sorts product categories descending on Internet Sales Amount
+select [Measures].[Internet Sales Amount] on 0,
+ASSP.[Order]([Product].[Category].[Category].MEMBERS,[Measures].[Internet Sales Amount],true) on 1
+from [Adventure Works]
+
+// RatioToParent Example
+WITH 
+  MEMBER Measures.SalesRatioToParent AS 
+    IIF
+    (
+      IsEmpty([Measures].[Sales Amount])
+     ,null
+     ,ASSP.ASStoredProcs.SetOperations.RatioToParent
+      (
+        Axis(1).Item(0)
+       ,[Measures].[Sales Amount]
+      )
+    )
+   ,FORMAT_STRING = 'Percent'
+   ,NON_EMPTY_BEHAVIOR = [Measures].[Sales Amount]
+SELECT 
+  {
+    [Measures].[Sales Amount]
+   ,[Measures].[SalesRatioToParent]
+  } ON 0
+ ,NON EMPTY 
+    (
+      [Promotion].[Promotion Category].MEMBERS
+     ,[Product].[Category].MEMBERS
+     ,[Sales Territory].[Sales Territory].MEMBERS
+    ) ON 1
+FROM [Adventure Works];
+
+
+go
+
+
+--TopCountWithTies/BottomCountWithTies examples
+select [Measures].[Internet Order Count] on 0,
+bottomcount(nonempty([Product].[Product Categories].[Product].members,[Measures].[Internet Order Count]),8,[Measures].[Internet Order Count]) on 1
+from [Adventure Works]
+-- returns 9 rows
+go
+select [Measures].[Internet Order Count] on 0,
+ASSP.BottomCountWithTies(
+nonempty([Product].[Product Categories].[Product].members,[Measures].[Internet Order Count]),8,[Measures].[Internet Order Count]) on 1
+from [Adventure Works]
+-- returns 10 rows
+go
+select [Measures].[Internet Order Count] on 0,
+topcount( [Product].[Product Categories].[Product].members ,62,[Measures].[Internet Order Count]) on 1
+from [Adventure Works]
+-- returns 63 rows
+go
+select [Measures].[Internet Order Count] on 0,
+ASSP.TopCountWithTies( [Product].[Product Categories].[Product].members ,62,[Measures].[Internet Order Count]) on 1
+from [Adventure Works]
+-- returns 64 rows

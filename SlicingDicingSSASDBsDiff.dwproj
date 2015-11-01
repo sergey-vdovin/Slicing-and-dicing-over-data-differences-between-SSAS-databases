@@ -159,7 +159,65 @@
   <Configurations>
     <Configuration>
       <Name>Development</Name>
-      <Options />
+      <Options>
+        <ConnectionMappings>
+          <ConfigurationSetting>
+            <Id>Adventure Works DW</Id>
+            <Name>Adventure Works DW</Name>
+            <Value xsi:type="xsd:string">Provider=SQLNCLI11.1;Data Source=localhost;Integrated Security=SSPI;Initial Catalog=AdventureWorksDW2014</Value>
+          </ConfigurationSetting>
+        </ConnectionMappings>
+        <ConnectionSecurityMappings>
+          <ConfigurationSetting>
+            <Id>Adventure Works DW</Id>
+            <Name>Adventure Works DW</Name>
+            <Value xsi:type="xsd:int">0</Value>
+          </ConfigurationSetting>
+        </ConnectionSecurityMappings>
+        <ReportActionServers>
+          <ConfigurationSetting>
+            <Id>Adventure Works</Id>
+            <Name>Adventure Works</Name>
+            <Value xsi:type="ConfigurationSettingsCollection">
+              <ConfigurationSetting>
+                <Id>Report Action</Id>
+                <Name>Report Action</Name>
+                <Value xsi:type="xsd:string">Localhost</Value>
+              </ConfigurationSetting>
+            </Value>
+          </ConfigurationSetting>
+        </ReportActionServers>
+        <ReportActionPaths>
+          <ConfigurationSetting>
+            <Id>Adventure Works</Id>
+            <Name>Adventure Works</Name>
+            <Value xsi:type="ConfigurationSettingsCollection">
+              <ConfigurationSetting>
+                <Id>Report Action</Id>
+                <Name>Report Action</Name>
+                <Value xsi:type="xsd:string">ReportServer?/AdventureWorks Sample Reports/Sales Reason Comparisons</Value>
+              </ConfigurationSetting>
+            </Value>
+          </ConfigurationSetting>
+        </ReportActionPaths>
+      </Options>
     </Configuration>
   </Configurations>
+  <References>
+    <ReferenceItem>
+      <ID>ASSP</ID>
+      <Name>ASSP</Name>
+      <Project>{68EC6D8C-1A61-426B-A8C8-68390665F01C}|ASSP\ASSP\ASSP.csproj</Project>
+      <Description>Analysis Services Stored Procedures sample project http://www.codeplex.com/ASStoredProcedures</Description>
+      <PermissionSet>Unrestricted</PermissionSet>
+      <ImpersonationMode>ImpersonateCurrentUser</ImpersonationMode>
+    </ReferenceItem>
+    <ReferenceItem>
+      <ID>SQLQuery</ID>
+      <Name>SQLQuery</Name>
+      <Project>{F6B65BCC-5C04-400C-89E6-72338D774662}|ASSP\SQLQuery\SQLQuery.csproj</Project>
+      <PermissionSet>Unrestricted</PermissionSet>
+      <ImpersonationMode>ImpersonateCurrentUser</ImpersonationMode>
+    </ReferenceItem>
+  </References>
 </Project>

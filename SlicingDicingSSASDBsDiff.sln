@@ -4,17 +4,72 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D2ABAB84-BF74-430A-B69E-9DC6D40DDA17}") = "SlicingDicingSSASDBsDiff", "SlicingDicingSSASDBsDiff.dwproj", "{8B105D22-EE54-4861-A834-156AD33D1844}"
+	ProjectSection(ProjectDependencies) = postProject
+		{68EC6D8C-1A61-426B-A8C8-68390665F01C} = {68EC6D8C-1A61-426B-A8C8-68390665F01C}
+		{F6B65BCC-5C04-400C-89E6-72338D774662} = {F6B65BCC-5C04-400C-89E6-72338D774662}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASSP", "ASSP\ASSP\ASSP.csproj", "{68EC6D8C-1A61-426B-A8C8-68390665F01C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLQuery", "ASSP\SQLQuery\SQLQuery.csproj", "{F6B65BCC-5C04-400C-89E6-72338D774662}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASSP Projects", "ASSP Projects", "{7B738CBD-F72E-4160-96F2-2EC0C2465DC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Default = Debug|Default
+		Development|Any CPU = Development|Any CPU
 		Development|Default = Development|Default
+		Release|Any CPU = Release|Any CPU
+		Release|Default = Release|Default
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Debug|Any CPU.ActiveCfg = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Debug|Any CPU.Build.0 = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Debug|Any CPU.Deploy.0 = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Debug|Default.ActiveCfg = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Debug|Default.Build.0 = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Debug|Default.Deploy.0 = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Development|Any CPU.ActiveCfg = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Development|Any CPU.Build.0 = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Development|Any CPU.Deploy.0 = Development
 		{8B105D22-EE54-4861-A834-156AD33D1844}.Development|Default.ActiveCfg = Development
 		{8B105D22-EE54-4861-A834-156AD33D1844}.Development|Default.Build.0 = Development
 		{8B105D22-EE54-4861-A834-156AD33D1844}.Development|Default.Deploy.0 = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Release|Any CPU.ActiveCfg = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Release|Any CPU.Build.0 = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Release|Any CPU.Deploy.0 = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Release|Default.ActiveCfg = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Release|Default.Build.0 = Development
+		{8B105D22-EE54-4861-A834-156AD33D1844}.Release|Default.Deploy.0 = Development
+		{68EC6D8C-1A61-426B-A8C8-68390665F01C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68EC6D8C-1A61-426B-A8C8-68390665F01C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68EC6D8C-1A61-426B-A8C8-68390665F01C}.Debug|Default.ActiveCfg = Debug|Any CPU
+		{68EC6D8C-1A61-426B-A8C8-68390665F01C}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{68EC6D8C-1A61-426B-A8C8-68390665F01C}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{68EC6D8C-1A61-426B-A8C8-68390665F01C}.Development|Default.ActiveCfg = Debug|Any CPU
+		{68EC6D8C-1A61-426B-A8C8-68390665F01C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68EC6D8C-1A61-426B-A8C8-68390665F01C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68EC6D8C-1A61-426B-A8C8-68390665F01C}.Release|Default.ActiveCfg = Release|Any CPU
+		{F6B65BCC-5C04-400C-89E6-72338D774662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6B65BCC-5C04-400C-89E6-72338D774662}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6B65BCC-5C04-400C-89E6-72338D774662}.Debug|Default.ActiveCfg = Debug|Any CPU
+		{F6B65BCC-5C04-400C-89E6-72338D774662}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6B65BCC-5C04-400C-89E6-72338D774662}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{F6B65BCC-5C04-400C-89E6-72338D774662}.Development|Default.ActiveCfg = Debug|Any CPU
+		{F6B65BCC-5C04-400C-89E6-72338D774662}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6B65BCC-5C04-400C-89E6-72338D774662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6B65BCC-5C04-400C-89E6-72338D774662}.Release|Default.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{68EC6D8C-1A61-426B-A8C8-68390665F01C} = {7B738CBD-F72E-4160-96F2-2EC0C2465DC1}
+		{F6B65BCC-5C04-400C-89E6-72338D774662} = {7B738CBD-F72E-4160-96F2-2EC0C2465DC1}
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
 	EndGlobalSection
 EndGlobal
