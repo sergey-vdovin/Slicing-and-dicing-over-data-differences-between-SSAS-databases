@@ -19,13 +19,72 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.AnalysisServices.AdomdServer;
+using AMDS = Microsoft.AnalysisServices.AdomdServer;
 using Microsoft.AnalysisServices; //reference to AMO
+using AMDC = Microsoft.AnalysisServices.AdomdClient ;
+using Microsoft.AnalysisServices.AdomdServer;
 
 namespace ASStoredProcs
 {
+
     public class CubeInfo
     {
+        //the assembly must be registered with unrestricted permissions for this function to succeed
+        [SafeToPrepare(true)]
+        public static object GetDBVal(string dbName)
+        {
+            object returnValue;
+            string measuresText = "";
+            string dimensionsText = "";
+            Boolean addcomma = false;
+
+            foreach (AMDS.Dimension d in Context.CurrentCube.Dimensions)
+            {
+                foreach (AMDS.Hierarchy h in d.AttributeHierarchies)
+                {
+
+                    if (d.DimensionType == DimensionTypeEnum.Measure)
+                    {
+                        measuresText = h.CurrentMember.UniqueName;
+                    }
+                    else
+                        //eliminate comparison dimension from the query
+                        if ((h.CurrentMember.UniqueName != h.DefaultMember) && (!h.CurrentMember.UniqueName.Contains("[Comparison Operations]")))
+                    {
+                        if (addcomma == false)
+                            addcomma = true;
+                        else
+                            dimensionsText += ",";
+
+                        dimensionsText += h.CurrentMember.UniqueName;
+                    }
+                    
+                }
+            }
+            //if all the dimensions in default members do not compose where clause of the query
+            if(dimensionsText!="") dimensionsText = " where (" + dimensionsText + ")";
+
+            string query=" select "+ measuresText+" on 0 from ["+Context.CurrentCube.Name+"] "+ dimensionsText;
+
+            Microsoft.AnalysisServices.AdomdClient.AdomdConnection conn = new Microsoft.AnalysisServices.AdomdClient.AdomdConnection("Data Source=" + Context.Server.Name+";Catalog="+dbName);
+                conn.Open();
+                try
+                {
+                    AMDC.CellSet queryCellset;
+                    Microsoft.AnalysisServices.AdomdClient.AdomdCommand queryCommand = new Microsoft.AnalysisServices.AdomdClient.AdomdCommand();
+                    queryCommand.CommandText = query;
+                    queryCommand.Connection = conn;
+                    queryCellset = queryCommand.ExecuteCellSet();
+                    returnValue = queryCellset[0].Value;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            return returnValue;
+
+        }
+
         //the assembly must be registered with unrestricted permissions for this function to succeed
         [SafeToPrepare(true)]
         public static DateTime GetCubeLastProcessedDate()

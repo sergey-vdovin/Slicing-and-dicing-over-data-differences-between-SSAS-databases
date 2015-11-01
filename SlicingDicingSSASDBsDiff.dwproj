@@ -113,6 +113,10 @@
       <Name>Subcategory Basket Analysis.dim</Name>
       <FullPath>Subcategory Basket Analysis.dim</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>Comparison Operations.dim</Name>
+      <FullPath>Comparison Operations.dim</FullPath>
+    </ProjectItem>
   </Dimensions>
   <DataSources>
     <ProjectItem>
